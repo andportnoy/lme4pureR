@@ -104,6 +104,15 @@ lmerCorr.fit <- function(y, mmFE, corr, grp,
 }
 
 
+# dump a matrix to binary file in dense row major form
+dumpmat <- function(mat) {
+    matname <- deparse(substitute(mat))
+    filename <- paste(matname, "-r.bin", sep="")
+    file <- file(filename, "wb")
+    writeBin(c(t(as.matrix(mat))), file)
+    close(file)
+}
+
 ##' Create linear mixed model deviance function
 ##'
 ##' A pure \code{R} implementation of the
@@ -139,13 +148,21 @@ pls <- function(X,y,Zt,Lambdat,thfun,weights,
               nrow(Lambdat) == q, ncol(Lambdat) == q, is.function(thfun))
                                         # calculate weighted products
     Whalf <- if (missing(weights)) Diagonal(n=n) else Diagonal(x=sqrt(as.numeric(weights)))
+    dumpmat(Whalf)
     WX <- Whalf %*% X
+    dumpmat(WX)
     Wy <- Whalf %*% y
+    dumpmat(Wy)
     ZtW <- Zt %*% Whalf
+    dumpmat(ZtW)
     XtWX <- crossprod(WX)
+    dumpmat(XtWX)
     XtWy <- crossprod(WX, Wy)
+    dumpmat(XtWy)
     ZtWX <- ZtW %*% WX
+    dumpmat(ZtWX)
     ZtWy <- ZtW %*% Wy
+    dumpmat(ZtWy)
     rm(WX,Wy)
     local({                             # mutable values stored in local environment
         b <- numeric(q)                 # conditional mode of random effects
