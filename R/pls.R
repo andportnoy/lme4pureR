@@ -169,7 +169,8 @@ pls <- function(X,y,Zt,Lambdat,thfun,weights,
         beta <- numeric(p)              # conditional estimate of fixed-effects
         cu <- numeric(q)                # intermediate solution
         DD <- XtWX                      # down-dated XtWX
-        L <- Cholesky(tcrossprod(Lambdat %*% ZtW), LDL = FALSE, Imult=1)
+        L_ <- Cholesky(tcrossprod(Lambdat %*% ZtW), LDL = FALSE, Imult=1)
+        L <- as(L_, "sparseMatrix"); dumpmat(L); L <- L_; rm(L_)
         Lambdat <- Lambdat              # stored here b/c x slot will be updated
         mu <- numeric(n)                # conditional mean of response
         RZX <- matrix(0,nrow=q,ncol=p)  # intermediate matrix in solution
