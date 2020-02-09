@@ -187,6 +187,7 @@ pls <- function(X,y,Zt,Lambdat,thfun,weights,
                                         # solve eqn. 31
             RZX[] <<- as.vector(solve(L, solve(L, Lambdat %*% ZtWX, system="P"),
                                       system="L"))
+            dumpmat(RZX)
             ## downdate XtWX and form Cholesky factor (eqn. 32)
             DD <<- as(XtWX - crossprod(RZX), "dpoMatrix")
             ## conditional estimate of fixed-effects coefficients (solve eqn. 33)
