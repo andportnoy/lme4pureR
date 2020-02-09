@@ -179,6 +179,7 @@ pls <- function(X,y,Zt,Lambdat,thfun,weights,
             Lambdat@x[] <<- thfun(theta)
             dumpmat(Lambdat, suffix="-new")
             L <<- update(L, Lambdat %*% ZtW, mult = 1)
+            L_ <- L; L <- as(L, "sparseMatrix"); dumpmat(L, "-new"); L <- L_; rm(L_)
                                         # solve eqn. 30
             cu[] <<- as.vector(solve(L, solve(L, Lambdat %*% ZtWy, system="P"),
                                      system="L"))
