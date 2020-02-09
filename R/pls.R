@@ -105,9 +105,9 @@ lmerCorr.fit <- function(y, mmFE, corr, grp,
 
 
 # dump a matrix to binary file in dense row major form
-dumpmat <- function(mat) {
+dumpmat <- function(mat, suffix="") {
     matname <- deparse(substitute(mat))
-    filename <- paste(matname, "-r.bin", sep="")
+    filename <- paste(matname, suffix, "-r.bin", sep="")
     file <- file(filename, "wb")
     writeBin(c(t(as.matrix(mat))), file)
     close(file)
@@ -177,6 +177,7 @@ pls <- function(X,y,Zt,Lambdat,thfun,weights,
         u <- numeric(q)                 # conditional mode of spherical random effects
         function(theta) {
             Lambdat@x[] <<- thfun(theta)
+            dumpmat(Lambdat, suffix="-new")
             L <<- update(L, Lambdat %*% ZtW, mult = 1)
                                         # solve eqn. 30
             cu[] <<- as.vector(solve(L, solve(L, Lambdat %*% ZtWy, system="P"),
