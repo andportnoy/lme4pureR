@@ -183,6 +183,7 @@ pls <- function(X,y,Zt,Lambdat,thfun,weights,
                                         # solve eqn. 30
             cu[] <<- as.vector(solve(L, solve(L, Lambdat %*% ZtWy, system="P"),
                                      system="L"))
+            dumpmat(cu)
                                         # solve eqn. 31
             RZX[] <<- as.vector(solve(L, solve(L, Lambdat %*% ZtWX, system="P"),
                                       system="L"))
