@@ -190,6 +190,7 @@ pls <- function(X,y,Zt,Lambdat,thfun,weights,
             dumpmat(RZX)
             ## downdate XtWX and form Cholesky factor (eqn. 32)
             DD <<- as(XtWX - crossprod(RZX), "dpoMatrix")
+            dumpmat(DD)
             ## conditional estimate of fixed-effects coefficients (solve eqn. 33)
             beta[] <<- as.vector(solve(DD, XtWy - crossprod(RZX, cu)))
             ## conditional mode of the spherical random-effects coefficients (eqn. 34)
