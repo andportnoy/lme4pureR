@@ -209,7 +209,8 @@ pls <- function(X,y,Zt,Lambdat,thfun,weights,
             }
             attributes(ld) <- NULL
                                         # profiled deviance or REML criterion
-            ld + fn*(1 + log(2*pi*pwrss) - log(fn))
+            deviance <- ld + fn*(1 + log(2*pi*pwrss) - log(fn))
+            dumpmat(deviance)
             #ld + fn*(1 + log(2*pi*pwrss))
         }
     })
