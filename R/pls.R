@@ -212,6 +212,7 @@ pls <- function(X,y,Zt,Lambdat,thfun,weights,
             deviance <- ld + fn*(1 + log(2*pi*pwrss) - log(fn))
             dumpmat(deviance)
             #ld + fn*(1 + log(2*pi*pwrss))
+            deviance
         }
     })
 }
